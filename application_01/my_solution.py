@@ -11,18 +11,23 @@ def close(word, data):
         if similar(word, another) > 0.75:
             yield another
 
+def print_definitions(word, data):
+    if type(data[word]) == list:
+        for definition in data[word]:
+            print(definition)
+    else:
+        print(data[word])
+            
 data = {}
 with open('data.json', 'r') as file:
     data = json.load(file)
-
+    
 while True:
     word = input("give a word: ").lower()
     if word in data:
-        if type(data[word]) == list:
-            for definition in data[word]:
-                print(definition)
-        else:
-            print(data[word])
+        print_definitions(word, data)
+    elif word.title() in data:
+        print_definitions(word.title(), data)
                 
         break
     else:
